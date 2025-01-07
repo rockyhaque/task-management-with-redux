@@ -4,5 +4,7 @@ export interface ITask {
   description: string;
   dueDate: string;
   isCompleted: boolean;
-  priority: "high" | "medium" | "low";
+  priority: "all" | "high" | "medium" | "low";
 }
+
+export type TPriority = ITask["priority"]
