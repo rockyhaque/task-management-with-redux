@@ -1,6 +1,7 @@
 import { Logo } from "@/assets/Logo";
 import { Link } from "react-router-dom";
 import { ModeToggle } from "../theme/mode-toggle";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   return (
@@ -11,14 +12,13 @@ const Navbar = () => {
         </div>
         <h1 className="text-2xl font-bold ml-2"> TASK Master</h1>
       </div>
-      <Link to="/" className="border p-2 bg-red-400 rounded-2xl">
-        {" "}
-        Tasks{" "}
-      </Link>
-      <Link to="/users" className="border p-2 bg-red-400 rounded-2xl">
-        {" "}
-        Users{" "}
-      </Link>
+      <Button>
+        <Link to="/"> Tasks </Link>
+      </Button>
+      <Button>
+        <Link to="/users"> Users </Link>
+      </Button>
+
       <div className="ml-auto">
         <ModeToggle />
       </div>

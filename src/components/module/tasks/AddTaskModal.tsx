@@ -34,24 +34,29 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { addTask } from "@/redux/features/task/taskSlice";
-import { useAppDispatch } from "@/redux/hook";
+import { selectUsers } from "@/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { ITask } from "@/types";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 export function AddTaskModal() {
+  const [open, setOpen] = useState(false);
+  const users = useAppSelector(selectUsers);
   const form = useForm();
 
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(addTask(data as ITask));
-    // console.log(data);
+    setOpen(false)
+    form.reset()
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="mb-5">Add Task 📝</Button>
       </DialogTrigger>
@@ -64,6 +69,7 @@ export function AddTaskModal() {
         </DialogHeader>
         <Form {...form}>
           <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+            {/* description */}
             <FormField
               control={form.control}
               name="description"
@@ -78,6 +84,7 @@ export function AddTaskModal() {
                 </FormItem>
               )}
             />
+            {/* title */}
             <FormField
               control={form.control}
               name="title"
@@ -93,6 +100,7 @@ export function AddTaskModal() {
               )}
             />
 
+            {/* priority */}
             <FormField
               control={form.control}
               name="priority"
@@ -112,6 +120,34 @@ export function AddTaskModal() {
                       <SelectItem value="low">Low</SelectItem>
                       <SelectItem value="medium">Medium</SelectItem>
                       <SelectItem value="high">High</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription></FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* assignedTo */}
+            <FormField
+              control={form.control}
+              name="assignedTo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Assigned To</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a user" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {users.map((user) => (
+                        <SelectItem value={user.id}>{user.name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormDescription></FormDescription>
