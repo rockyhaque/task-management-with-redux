@@ -46,10 +46,9 @@ export function AddTaskModal() {
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-      dispatch(addTask(data as ITask))
-      // console.log(data);
+    dispatch(addTask(data as ITask));
+    // console.log(data);
   };
-
 
   return (
     <Dialog>
@@ -165,7 +164,12 @@ export function AddTaskModal() {
               )}
             />
             <DialogFooter>
-              <Button className="mt-5 w-full bg-cyan-800 hover:bg-cyan-950" type="submit">Save changes</Button>
+              <Button
+                className="mt-5 w-full bg-cyan-800 hover:bg-cyan-950"
+                type="submit"
+              >
+                Save changes
+              </Button>
             </DialogFooter>
           </form>
         </Form>

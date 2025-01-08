@@ -8,3 +8,8 @@ export interface ITask {
 }
 
 export type TPriority = ITask["priority"]
+
+export interface IUser {
+  id: string;
+  name: string;
+}
